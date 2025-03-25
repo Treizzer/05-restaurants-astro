@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  /* --color-primary: #FE9900; */
+  /* --color-primary: #FF8801; */
+  --color-primary: #FF8D01;
+  --color-primary-light: #FFB950;
+
+  /* #FFFFFF */
+  --color-theme-green: #83FF75;
+  /* --color-theme-red: #FF4633; */
+  --color-theme-red: #FF0000;
+  /* #333333 */
+  --color-theme-yellow: #FCFF30;
+}
+
+body {
+  font-family: system-ui, sans-serif, Roboto;
+}

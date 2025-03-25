@@ -1,0 +1,81 @@
+---
+import { type Restaurant } from "@/lib/data";
+import Layout from "../layouts/Layout.astro"
+const API_URL = import.meta.env.PUBLIC_API_URL;
+
+interface Props {
+  restaurants: Restaurant[];
+}
+
+const { restaurants } = Astro.props;
+
+// 
+const fetchRestaurants = async () => {
+  // const response = await fetch("/api/restaurants");
+  // const response = await fetch("http://localhost:8080/api/restaurant");
+  const response = await fetch(API_URL + "/restaurant");
+  const restaurants = await response.json();
+  // const restaurants = get();
+
+  return restaurants;
+}
+
+const res = await fetchRestaurants();
+---
+
+<!-- <head>
+  <meta charset="UTF-8" />
+</head> -->
+
+<Layout title="Lista de Restaurantes">
+  <div class="bg-theme-green min-h-screen min-w-fit">
+    <nav class="py-2">
+      <a href="/">Inicio</a>
+      <a href="">Lista</a>
+    </nav>
+
+    <main>
+      <!-- <table class="table-auto text-left min-w-full divide-y divide-gray-500/20"> -->
+      <table class="table-auto text-left min-w-full divide-y">
+        <thead>
+          <!-- <tr class="text-zinc-400 text-sm"> -->
+          <tr class="text-base">
+            <th class="px-4 py-2 font-light">#</th>
+            <th class="px-4 py-2 font-light">Nombre</th>
+            <th class="px-4 py-2 font-light">Dirección</th>
+            <th class="px-4 py-2 font-light">Código Postal</th>
+            <th class="px-4 py-2 font-light">Web</th>
+            <th class="px-4 py-2 font-light">Ciudad</th>
+            <th class="px-4 py-2 font-light">País</th>
+            <th class="px-4 py-2 font-light">Nombres claves</th>
+            <th class="px-4 py-2 font-light">Provincia</th>
+            <th class="px-4 py-2 font-light">Latitud</th>
+            <th class="px-4 py-2 font-light">Longitud</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <tr class="h-[16px]"></tr>
+          {
+            res?.map((r: Restaurant, index: number) => (
+              // <tr class="border-spacing-0 text-gray-300 text-sm font-light hover:bg-white/10 overflow-hidden transition duration-300">
+              <tr class="border-spacing-0 text-xs font-light hover:bg-white/30 overflow-hidden transition duration-300">
+                <td class="px-4 py-2 rounded-tl-lg rounded-bl-lg w-5">{index + 1}</td>
+                <td class="px-4 py-2">{r.name}</td>
+                <td class="px-4 py-2">{r.address}</td>
+                <td class="px-4 py-2">{r.postalCode}</td>
+                <td class="px-4 py-2">{r.website}</td>
+                <td class="px-4 py-2">{r.city}</td>
+                <td class="px-4 py-2">{r.country}</td>
+                <td class="px-4 py-2">{r.keys}</td>
+                <td class="px-4 py-2">{r.province}</td>
+                <td class="px-4 py-2">{r.latitude}</td>
+                <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">{r.longitude}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>  
+    </main>
+  </div>
+</Layout>
