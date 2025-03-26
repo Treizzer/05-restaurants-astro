@@ -1,10 +1,10 @@
 <section class="bg-primary min-h-screen py-6">
   <div class="grid grid-cols-5 grid-rows-5 gap-3.5 max-w-4xl mx-auto h-[500px]">
-    <div 
-      class="col-span-4 row-span-4 rounded-2xl text-white font-bold overflow-hidden text-6xl flex justify-center items-center bg-primary-light relative"
+    <div
+      class="col-span-5 row-span-4 rounded-2xl text-white font-bold overflow-hidden text-6xl flex justify-center items-center bg-primary-light relative"
     >
-      <a href="/list">
-        <img 
+      <a href="/list" transition:name={`list`}>
+        <img
           src="/images/bad-food.webp"
           alt="Imagen difuminada con distintos tipos de comida chatarra"
           class="blur-xs w-full h-full object-cover opacity-80 absolute top-0 left-0"
@@ -12,17 +12,17 @@
         <span class="relative z-10">Restaurantes</span>
       </a>
     </div>
-    <div 
-      class="col-start-5 row-span-4 bg-theme-red rounded-2xl text-4xl text-white text-center font-bold justify-center items-center flex"
+    <div
+      class="col-span-4 row-start-5 row-span-1 bg-theme-green rounded-2xl min-h-16 text-4xl text-center content-center font-bold text-white"
+    >
+      <span>Agregar</span>
+    </div>
+    <div
+      class="col-start-5 row-span-1 bg-theme-red rounded-2xl text-4xl text-white text-center font-bold justify-center items-center flex"
     >
       <span>Eliminar</span>
       <!-- <div class="-rotate-3 flex flex-col">
       </div> -->
-    </div>
-    <div 
-      class="col-span-5 row-start-5 row-span-1 bg-theme-green rounded-2xl min-h-16 text-4xl text-center content-center font-bold text-white"
-    >
-      <span>Agregar</span>
     </div>
   </div>
 </section>

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 
 const { title = "Página de Inicio de Restaurantes" } = Astro.props;
 ---
@@ -12,7 +13,9 @@ const { title = "Página de Inicio de Restaurantes" } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ClientRouter />
   </head>
+
   <body>
     <slot />
   </body>

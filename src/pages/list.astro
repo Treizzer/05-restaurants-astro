@@ -1,6 +1,8 @@
 ---
 import { type Restaurant } from "@/lib/data";
-import Layout from "../layouts/Layout.astro"
+import Layout from "../layouts/Layout.astro";
+import "../styles/list-table.css";
+
 const API_URL = import.meta.env.PUBLIC_API_URL;
 
 interface Props {
@@ -9,7 +11,7 @@ interface Props {
 
 const { restaurants } = Astro.props;
 
-// 
+//
 const fetchRestaurants = async () => {
   // const response = await fetch("/api/restaurants");
   // const response = await fetch("http://localhost:8080/api/restaurant");
@@ -18,7 +20,7 @@ const fetchRestaurants = async () => {
   // const restaurants = get();
 
   return restaurants;
-}
+};
 
 const res = await fetchRestaurants();
 ---
@@ -26,56 +28,64 @@ const res = await fetchRestaurants();
 <!-- <head>
   <meta charset="UTF-8" />
 </head> -->
-
 <Layout title="Lista de Restaurantes">
-  <div class="bg-theme-green min-h-screen min-w-fit">
+  <div class="bg-theme-green min-h-screen flex flex-col items-center">
     <nav class="py-2">
       <a href="/">Inicio</a>
       <a href="">Lista</a>
     </nav>
 
-    <main>
-      <!-- <table class="table-auto text-left min-w-full divide-y divide-gray-500/20"> -->
-      <table class="table-auto text-left min-w-full divide-y">
-        <thead>
-          <!-- <tr class="text-zinc-400 text-sm"> -->
-          <tr class="text-base">
-            <th class="px-4 py-2 font-light">#</th>
-            <th class="px-4 py-2 font-light">Nombre</th>
-            <th class="px-4 py-2 font-light">Dirección</th>
-            <th class="px-4 py-2 font-light">Código Postal</th>
-            <th class="px-4 py-2 font-light">Web</th>
-            <th class="px-4 py-2 font-light">Ciudad</th>
-            <th class="px-4 py-2 font-light">País</th>
-            <th class="px-4 py-2 font-light">Nombres claves</th>
-            <th class="px-4 py-2 font-light">Provincia</th>
-            <th class="px-4 py-2 font-light">Latitud</th>
-            <th class="px-4 py-2 font-light">Longitud</th>
-          </tr>
-        </thead>
-      
-        <tbody>
-          <tr class="h-[16px]"></tr>
-          {
-            res?.map((r: Restaurant, index: number) => (
-              // <tr class="border-spacing-0 text-gray-300 text-sm font-light hover:bg-white/10 overflow-hidden transition duration-300">
-              <tr class="border-spacing-0 text-xs font-light hover:bg-white/30 overflow-hidden transition duration-300">
-                <td class="px-4 py-2 rounded-tl-lg rounded-bl-lg w-5">{index + 1}</td>
-                <td class="px-4 py-2">{r.name}</td>
-                <td class="px-4 py-2">{r.address}</td>
-                <td class="px-4 py-2">{r.postalCode}</td>
-                <td class="px-4 py-2">{r.website}</td>
-                <td class="px-4 py-2">{r.city}</td>
-                <td class="px-4 py-2">{r.country}</td>
-                <td class="px-4 py-2">{r.keys}</td>
-                <td class="px-4 py-2">{r.province}</td>
-                <td class="px-4 py-2">{r.latitude}</td>
-                <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">{r.longitude}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>  
+    <main class="w-full max-w-5xl py-10" transition:name={`list`}>
+      <div
+        class="overflow-x-scroll max-h-[600px] border-2 border-primary-light rounded-lg"
+      >
+        <!-- <table class="table-auto text-left min-w-full divide-y divide-gray-500/20"> -->
+        <table class="table-auto text-left min-w-4xl divide-y divide-primary">
+          <thead>
+            <!-- <tr class="text-zinc-400 text-sm"> -->
+            <tr class="text-base">
+              <th class="px-4 py-2 left-0 sticky bg-theme-green">#</th>
+              <th class="px-4 py-2">Nombre</th>
+              <th class="px-4 py-2">Dirección</th>
+              <th class="px-4 py-2">Código Postal</th>
+              <th class="px-4 py-2">Web</th>
+              <th class="px-4 py-2">Ciudad</th>
+              <th class="px-4 py-2">País</th>
+              <th class="px-4 py-2">Nombres claves</th>
+              <th class="px-4 py-2">Provincia</th>
+              <th class="px-4 py-2">Latitud</th>
+              <th class="px-4 py-2">Longitud</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="h-[16px]"></tr>
+            {
+              res?.map((r: Restaurant, index: number) => (
+                // <tr class="border-spacing-0 text-gray-300 text-sm font-light hover:bg-white/10 overflow-hidden transition duration-300">
+                <tr class="border-spacing-0 text-sm font-light hover:bg-white/30 overflow-hidden transition duration-300">
+                  {/* <td class="px-4 py-2 rounded-tl-lg rounded-bl-lg w-5 sticky left-0 bg-theme-green/95"> */}
+                  <td class="px-4 py-2 w-5 sticky left-0 bg-theme-green">
+                    {index + 1}
+                  </td>
+                  <td class="px-4 py-2">{r.name}</td>
+                  <td class="px-4 py-2">{r.address}</td>
+                  <td class="px-4 py-2">{r.postalCode}</td>
+                  <td class="px-4 py-2">{r.website}</td>
+                  <td class="px-4 py-2">{r.city}</td>
+                  <td class="px-4 py-2">{r.country}</td>
+                  <td class="px-4 py-2">{r.keys}</td>
+                  <td class="px-4 py-2">{r.province}</td>
+                  <td class="px-4 py-2">{r.latitude}</td>
+                  <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
+                    {r.longitude}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     </main>
   </div>
 </Layout>
