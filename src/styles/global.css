@@ -7,11 +7,25 @@
   --color-primary-light: #FFB950;
 
   /* #FFFFFF */
-  --color-theme-green: #83FF75;
+  /* --color-theme-green: #83FF75; */
+  --color-theme-green: #73FF01;
   /* --color-theme-red: #FF4633; */
   --color-theme-red: #FF0000;
+  --color-theme-blue: #0173FF;
+  --color-theme-b: #0E01FF;
   /* #333333 */
   --color-theme-yellow: #FCFF30;
+  /* Complement Colors */
+  --color-theme-violet-blue: #4A21C2;
+  --color-theme-vb: #4F14B7;
+  --color-theme-blue-a: #2163C2;
+  --color-theme-blue-b: #2199C2;
+  --color-theme-blue-c: #5096FF;
+  --color-theme-blue-d: #6150FF;
+  /* 01FF8D */
+  --color-theme-green-a: #01FF0E;
+  --color-theme-violet-a: #8D01FF;
+  --color-theme-pink-a: #FF01F2;
 }
 
 body {
