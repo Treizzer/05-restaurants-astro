@@ -1,0 +1,23 @@
+---
+const { label = "Label Name" } = Astro.props;
+---
+
+<p class="pt-6 px-6">
+  <label class="relative block">
+    <input 
+      type="text" 
+      name="name" 
+      required
+      placeholder=" "
+      class="peer px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-green-a  focus:border-transparent  transition-all duration-300 w-3xs
+      not-placeholder-shown:outline-none not-placeholder-shown:ring-2 not-placeholder-shown:ring-theme-green-a bg-white" 
+    />
+    <span
+    class="absolute left-4 top-2/4 -translate-y-2/4 text-gray-500 transition-all duration-300 peer-placeholder-shown:top-2/4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-1 peer-focus:text-sm peer-focus:text-theme-violet-a peer-focus:bg-white peer-focus:rounded-xs peer-focus:px-1
+    peer-focus:font-semibold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:text-theme-violet-a peer-not-placeholder-shown:bg-white peer-not-placeholder-shown:px-1 peer-not-placeholder-shown:font-semibold peer-not-placeholder-shown:rounded-xs peer-not-placeholder-shown:ring-1 peer-not-placeholder-shown:ring-theme-green-a peer-focus:ring-1 peer-focus:ring-theme-green-a"
+    >
+      {label}
+    </span>
+    <!-- MODIFY peer-focus:rounded-xs peer-not-placeholder-shown:rounded-xs -->
+  </label>
+</p>
