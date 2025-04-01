@@ -17,3 +17,6 @@ export const get = async () => {
     body: JSON.stringify({ message: "API is working!" }),
   };
 };
+
+
+// export const post = async () => {};

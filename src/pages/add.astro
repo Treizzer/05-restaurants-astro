@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import InputText from "@/components/InputText.astro";
+
+// const API_URL = import.meta.env.PUBLIC_API_URL;
 ---
 
 <Layout title="Agregar un nuevo restaurante">
@@ -16,11 +18,16 @@ import InputText from "@/components/InputText.astro";
 
     <main class="pb-10">
       <form
+        id="restaurantForm"
         class="max-w-3xl min-h-[500px] bg-white shadow-theme-b shadow-2xl rounded-2xl flex flex-col bg-gradient-to-t from-theme-b to-primary"
       >
+        <!-- onsubmit="submitForm(event)" -->
+        <!-- method="post"
+        action=`${API_URL}/restaurant` -->
         <h3 class="text-3xl py-2 self-center font-semibold text-gray-200">
           Ingrese los datos
         </h3>
+
         <!-- <p class="pt-6 pl-6"> -->
         <!-- <label class="relative block"> -->
         <!-- <input 
@@ -31,22 +38,23 @@ import InputText from "@/components/InputText.astro";
             /> -->
         <!-- </p> -->
         <section class="flex flex-wrap justify-evenly">
-          <InputText label="Nombre" />
-          <InputText label="Dirección" />
-          <InputText label="Código Postal" />
-          <InputText label="Sitio web" />
-          <InputText label="Ciudad" />
-          <InputText label="País" />
-          <InputText label="Palabras claves" />
-          <InputText label="Provincia" />
-          <InputText label="Latitud" />
-          <InputText label="Longitud" />
+          <InputText label="Nombre" name="name" />
+          <InputText label="Dirección" name="address" />
+          <InputText label="Código Postal" name="postalCode" />
+          <InputText label="Sitio web" name="website" />
+          <InputText label="Ciudad" name="city" />
+          <InputText label="País" name="country" />
+          <InputText label="Palabras claves" name="keys" />
+          <InputText label="Provincia" name="province" />
+          <InputText label="Latitud" name="latitude" />
+          <InputText label="Longitud" name="longitude" />
         </section>
         <p class="py-8 self-center">
           <input
-            class="bg-theme-green-a w-64 h-12 rounded-lg font-bold text-xl text-white"
+            class="bg-theme-green-a w-64 h-12 rounded-lg font-bold text-xl text-white hover:cursor-pointer"
             type="button"
             value="Guardar"
+            id="submitButton"
           />
         </p>
         <!-- <button>Presióname</button> -->
@@ -54,6 +62,52 @@ import InputText from "@/components/InputText.astro";
     </main>
   </div>
 </Layout>
+
+<script>
+  const API_URL = import.meta.env.PUBLIC_API_URL;
+
+  // Find the form by its ID
+  // const form = document.getElementById("submitButton");
+
+  // Attach the event listener
+  document
+    .getElementById("submitButton")
+    ?.addEventListener("click", async () => {
+      // event.preventDefault; // Prevent the default form submisions behavior
+
+      const form = document.getElementById("restaurantForm") as HTMLFormElement;
+      // Gather form data
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries()); // Convert formData to a JSON Object
+
+      // Send data to the API
+      try {
+        const response = await fetch(`${API_URL}/restaurant`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          const location = response.headers.get("Location");
+          alert(`¡Restaurante agregado con éxito!\nDetalles en: ${location}`);
+          console.log(location);
+          form?.reset();
+        } else {
+          const error = await response.json();
+          console.log(`Error: ${error}`);
+          alert(
+            `Algo salió mal: ${error.message || "Error al enviar los datos"}`
+          );
+        }
+      } catch (err) {
+        console.error(`Error al enviar la solicitud: ${err}`);
+        alert("Error al conectar con el servidor");
+      }
+    });
+</script>
 
 <!-- <script>
   const btn = document.querySelector("button");
