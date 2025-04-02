@@ -28,6 +28,37 @@
   --color-theme-pink-a: #FF01F2;
 }
 
+/* Style the entire scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px; /* Width for vertical scrollbars */
+  height: 12px; /* Height for horizontal scrollbars */
+  background-color: #53d4ff;
+  border-radius: 2px;
+}
+
+/* .custom-scrollbar::-webkit-scrollbar-button {
+  width: 16px;
+  height: 16px;
+  background-color: gray;
+} */
+
+/* Style the scrollbar track (background) */
+/* .custom-scrollbar::-webkit-scrollbar-track { */
+  /* background-color: blue; Change to any color */
+/* } */
+
+/* Style the scrollbar thumb (draggable part) */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-theme-blue-d); /* Thumb color */
+  border-radius: 3px; /* Rounded corners for the thumb */
+}
+
+/* Style scrollbar thumb on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-theme-violet-blue); /* Darker blue on hover */
+}
+
+
 body {
   font-family: system-ui, sans-serif, Roboto;
 }

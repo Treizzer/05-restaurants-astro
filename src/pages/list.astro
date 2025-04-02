@@ -2,6 +2,7 @@
 import { type Restaurant } from "@/lib/data";
 import Layout from "../layouts/Layout.astro";
 import "../styles/list-table.css";
+import "../styles/global.css";
 
 const API_URL = import.meta.env.PUBLIC_API_URL;
 
@@ -29,22 +30,28 @@ const res = await fetchRestaurants();
   <meta charset="UTF-8" />
 </head> -->
 <Layout title="Lista de Restaurantes">
-  <div class="bg-theme-green min-h-screen flex flex-col items-center">
-    <nav class="py-2">
+  <div
+    class="bg-gradient-to-bl from-theme-blue via-theme-green-a to-theme-yellow min-h-screen flex flex-col items-center"
+  >
+    <h1 class="text-6xl text-white font-black">Lista de Restaurantes</h1>
+
+    <nav class="py-5 text-4xl flex gap-10 text-white font-medium">
       <a href="/">Inicio</a>
       <a href="">Lista</a>
     </nav>
 
     <main class="w-full max-w-5xl py-10" transition:name={`list`}>
       <div
-        class="overflow-x-scroll max-h-[600px] border-2 border-primary-light rounded-lg"
+        class="custom-scrollbar overflow-x-scroll max-h-[600px] border-2 border-primary-light rounded-lg"
       >
         <!-- <table class="table-auto text-left min-w-full divide-y divide-gray-500/20"> -->
-        <table class="table-auto text-left min-w-4xl divide-y divide-primary">
+        <table
+          class="table-auto text-left min-w-4xl divide-y divide-primary bg-primary-light"
+        >
           <thead>
             <!-- <tr class="text-zinc-400 text-sm"> -->
             <tr class="text-base">
-              <th class="px-4 py-2 left-0 sticky bg-theme-green">#</th>
+              <th class="px-4 py-2 left-0 sticky bg-primary">#</th>
               <th class="px-4 py-2">Nombre</th>
               <th class="px-4 py-2">Dirección</th>
               <th class="px-4 py-2">Código Postal</th>
@@ -59,13 +66,13 @@ const res = await fetchRestaurants();
           </thead>
 
           <tbody>
-            <tr class="h-[16px]"></tr>
+            <tr class="h-[16px]"><td class="bg-primary sticky left-0"></td></tr>
             {
               res?.map((r: Restaurant, index: number) => (
                 // <tr class="border-spacing-0 text-gray-300 text-sm font-light hover:bg-white/10 overflow-hidden transition duration-300">
                 <tr class="border-spacing-0 text-sm font-light hover:bg-white/30 overflow-hidden transition duration-300">
                   {/* <td class="px-4 py-2 rounded-tl-lg rounded-bl-lg w-5 sticky left-0 bg-theme-green/95"> */}
-                  <td class="px-4 py-2 w-5 sticky left-0 bg-theme-green">
+                  <td class="px-4 py-2 w-5 sticky left-0 bg-primary">
                     {index + 1}
                   </td>
                   <td class="px-4 py-2">{r.name}</td>

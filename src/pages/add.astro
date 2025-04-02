@@ -11,7 +11,7 @@ import InputText from "@/components/InputText.astro";
   >
     <h1 class="text-6xl text-white font-black">Agregar un Restaurante</h1>
 
-    <nav class="py-7 text-4xl flex gap-4 text-white font-medium">
+    <nav class="py-7 text-4xl flex gap-10 text-white font-medium">
       <a href="/">Inicio</a>
       <a href="/list">Lista</a>
     </nav>
@@ -95,6 +95,18 @@ import InputText from "@/components/InputText.astro";
           alert(`¡Restaurante agregado con éxito!\nDetalles en: ${location}`);
           console.log(location);
           form?.reset();
+          window.location.href = "/list";
+        } else if (response.status == 400) {
+          const message = await response.json();
+          let info = ``;
+          // Object.keys(message).forEach((key) => {
+          //   const m = message[key];
+          //   info += `${key}: ${m}\n`;
+          // });
+          for (const key in message) {
+            info += `${key}: ${message[key]}\n`;
+          }
+          alert(info);
         } else {
           const error = await response.json();
           console.log(`Error: ${error}`);
