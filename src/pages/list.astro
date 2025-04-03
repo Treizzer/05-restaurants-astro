@@ -3,6 +3,7 @@ import { type Restaurant } from "@/lib/data";
 import Layout from "../layouts/Layout.astro";
 import "../styles/list-table.css";
 import "../styles/global.css";
+import NavButtons from "@/components/NavButtons.astro";
 
 const API_URL = import.meta.env.PUBLIC_API_URL;
 
@@ -33,14 +34,16 @@ const res = await fetchRestaurants();
   <div
     class="bg-gradient-to-bl from-theme-blue via-theme-green-a to-theme-yellow min-h-screen flex flex-col items-center"
   >
-    <h1 class="text-6xl text-white font-black">Lista de Restaurantes</h1>
+    <h1 class="pt-2 text-6xl text-white font-black">Lista de Restaurantes</h1>
 
-    <nav class="py-5 text-4xl flex gap-10 text-white font-medium">
+    <!-- <nav class="py-5 text-4xl flex gap-10 text-white font-medium">
       <a href="/">Inicio</a>
       <a href="">Lista</a>
-    </nav>
+    </nav> -->
 
-    <main class="w-full max-w-5xl py-10" transition:name={`list`}>
+    <NavButtons />
+
+    <main class="w-full max-w-5xl pb-10" transition:name={`list`}>
       <div
         class="custom-scrollbar overflow-x-scroll max-h-[600px] border-2 border-primary-light rounded-lg"
       >

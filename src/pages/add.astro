@@ -1,20 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import InputText from "@/components/InputText.astro";
+import NavButtons from "@/components/NavButtons.astro";
 
 // const API_URL = import.meta.env.PUBLIC_API_URL;
+
+// You need to use this for the <nav>
+// console.log(Astro.url.pathname == Astro.url.pathname);
+// console.log(Astro.url.pathname);
 ---
 
 <Layout title="Agregar un nuevo restaurante">
   <div
     class="max-w-screen min-h-screen bg-gradient-to-br from-primary via-primary-light to-theme-yellow flex flex-col items-center"
   >
-    <h1 class="text-6xl text-white font-black">Agregar un Restaurante</h1>
+    <h1 class="pt-2 text-6xl text-white font-black">Agregar un Restaurante</h1>
 
-    <nav class="py-7 text-4xl flex gap-10 text-white font-medium">
-      <a href="/">Inicio</a>
-      <a href="/list">Lista</a>
-    </nav>
+    <!-- <nav class="py-7 text-4xl flex gap-10 text-white font-medium"> -->
+    <!-- <nav class="py-7 text-xl flex gap-7 text-white font-medium">
+      <a
+        class="bg-theme-violet-a/5 rounded-2xl border border-theme-violet-a/30 py-1 px-2 hover:scale-125 hover:bg-white/10 transition"
+        href="/"
+      >
+        Inicio
+      </a>
+      <a
+        class="bg-theme-violet-a/5 rounded-2xl border border-theme-violet-a/30 py-1 px-2 hover:scale-125 hover:bg-white/10 transition"
+        href="/list">Lista</a
+      >
+    </nav> -->
+
+    <NavButtons />
 
     <main class="pb-10">
       <form
@@ -60,6 +76,11 @@ import InputText from "@/components/InputText.astro";
         <!-- <button>Presióname</button> -->
       </form>
     </main>
+    <div
+      id="errorMessages"
+      class="text-red-500 font-semibold shadow-theme-red shadow-2xl"
+    >
+    </div>
   </div>
 </Layout>
 
@@ -98,21 +119,41 @@ import InputText from "@/components/InputText.astro";
           window.location.href = "/list";
         } else if (response.status == 400) {
           const message = await response.json();
-          let info = ``;
+          let info = `<ul class="mt-0.5 pb-7 px-2 bg-gray-50 rounded-lg">`;
+
           // Object.keys(message).forEach((key) => {
           //   const m = message[key];
           //   info += `${key}: ${m}\n`;
           // });
-          for (const key in message) {
-            info += `${key}: ${message[key]}\n`;
+          Object.entries(message).forEach(([key, value]) => {
+            // for (const key in message) {
+            info += `<li><strong>${key}</strong>: ${value}</li>`;
+          });
+          // alert(info);
+          info += `</ul>`;
+
+          // Display the errors
+          const errorMessages = document.getElementById("errorMessages");
+          if (errorMessages) {
+            errorMessages.innerHTML = info;
+            // Scroll to the errors section
+            errorMessages.scrollIntoView({ behavior: "smooth" });
+            const firstInvalidField = Object.keys(message)[0];
+            document
+              .querySelector<HTMLElement>(`[name="${firstInvalidField}"]`)
+              ?.focus();
           }
-          alert(info);
         } else {
-          const error = await response.json();
-          console.log(`Error: ${error}`);
-          alert(
-            `Algo salió mal: ${error.message || "Error al enviar los datos"}`
-          );
+          try {
+            const error = await response.json();
+            console.log(`Detailed error: ${error}`);
+            alert(
+              `Algo salió mal: ${error.message || "Error al enviar los datos"}`
+            );
+          } catch (err) {
+            console.error(`Unexpected error: ${err}`);
+            alert("Un error inesperado ocurrió al procesar su solicitud");
+          }
         }
       } catch (err) {
         console.error(`Error al enviar la solicitud: ${err}`);

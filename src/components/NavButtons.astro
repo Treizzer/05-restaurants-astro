@@ -1,0 +1,36 @@
+---
+const pathnames = {
+  "/": "Inicio",
+  "/add": "Agregar", 
+  "/list": "Listar"
+};
+const currentPathname = Astro.url.pathname;
+---
+
+<!-- <nav class="py-7 text-4xl flex gap-10 text-white font-medium"> -->
+<nav class="py-5 text-xl flex gap-7 text-white font-medium">
+  {
+    Object.entries(pathnames).map(([key, value]) => (
+      currentPathname != key ? ( 
+        <a
+          class="bg-theme-violet-a/5 rounded-2xl border border-theme-violet-a/30 py-1 px-2 hover:scale-125 hover:bg-white/10 transition"
+          href={key}
+        >
+          {value}
+        </a>
+      )
+      :
+      null
+    ))
+  }
+  <!-- <a
+    class="bg-theme-violet-a/5 rounded-2xl border border-theme-violet-a/30 py-1 px-2 hover:scale-125 hover:bg-white/10 transition"
+    href="/"
+  >
+    Inicio
+  </a>
+  <a
+    class="bg-theme-violet-a/5 rounded-2xl border border-theme-violet-a/30 py-1 px-2 hover:scale-125 hover:bg-white/10 transition"
+    href="/list">Lista</a
+  > -->
+</nav>
