@@ -13,18 +13,26 @@
       </a>
     </div>
     <div
-      class="col-span-4 row-start-5 row-span-1 bg-theme-green-a rounded-2xl min-h-16 text-4xl font-bold text-white flex"
+      class="col-span-full row-start-5 row-span-1 bg-theme-green-a rounded-2xl min-h-16 text-4xl font-bold text-white flex"
     >
-      <a href="/add" class="min-h-full min-w-full text-center content-center">
+      <a
+        href="/add"
+        transition:name={`add`}
+        class="min-h-full min-w-full text-center content-center"
+      >
         <span>Agregar</span>
       </a>
     </div>
-    <div
-      class="col-start-5 row-span-1 bg-theme-red rounded-2xl text-4xl text-white text-center font-bold justify-center items-center flex"
+    <!-- <div
+      class="col-start-5 row-span-1 bg-theme-red rounded-2xl text-4xl text-white font-bold flex"
     >
-      <span>Eliminar</span>
-      <!-- <div class="-rotate-3 flex flex-col">
-      </div> -->
-    </div>
+      <a
+        href="/delete"
+        transition:name={`delete`}
+        class="min-h-full min-w-full text-center content-center"
+      >
+        <span>Eliminar</span>
+      </a>
+    </div> -->
   </div>
 </section>

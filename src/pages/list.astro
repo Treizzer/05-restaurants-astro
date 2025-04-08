@@ -4,6 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import "../styles/list-table.css";
 import "../styles/global.css";
 import NavButtons from "@/components/NavButtons.astro";
+import TrashCanIcon from "@/icons/TrashCan.astro";
+import EditIcon from "@/icons/Edit.astro";
 
 const API_URL = import.meta.env.PUBLIC_API_URL;
 
@@ -43,9 +45,12 @@ const res = await fetchRestaurants();
 
     <NavButtons />
 
-    <main class="w-full max-w-5xl pb-10" transition:name={`list`}>
-      <div
+    <main id="main" class="max-w-5xl pb-11" transition:name={`list`}>
+      <!-- <div
         class="custom-scrollbar overflow-x-scroll max-h-[600px] border-2 border-primary-light rounded-lg"
+      > -->
+      <div
+        class="md:overflow-x-hidden sm:overflow-x-scroll max-h-[600px] border-2 border-primary-light rounded-lg"
       >
         <!-- <table class="table-auto text-left min-w-full divide-y divide-gray-500/20"> -->
         <table
@@ -61,10 +66,12 @@ const res = await fetchRestaurants();
               <th class="px-4 py-2">Web</th>
               <th class="px-4 py-2">Ciudad</th>
               <th class="px-4 py-2">País</th>
-              <th class="px-4 py-2">Nombres claves</th>
+              <th class="px-4 py-2">Eliminar</th>
+              <th class="px-4 py-2">Modificar</th>
+              <!-- <th class="px-4 py-2">Nombres claves</th>
               <th class="px-4 py-2">Provincia</th>
               <th class="px-4 py-2">Latitud</th>
-              <th class="px-4 py-2">Longitud</th>
+              <th class="px-4 py-2">Longitud</th> -->
             </tr>
           </thead>
 
@@ -84,12 +91,41 @@ const res = await fetchRestaurants();
                   <td class="px-4 py-2">{r.website}</td>
                   <td class="px-4 py-2">{r.city}</td>
                   <td class="px-4 py-2">{r.country}</td>
-                  <td class="px-4 py-2">{r.keys}</td>
+                  {/* <td class="px-4 py-2 flex justify-center"> */}
+                  <td class="px-4 py-2 text-center">
+                    {/* <input
+                      type="button"
+                      class="cursor-pointer bg-theme-red text-white p-1 rounded-md font-medium"
+                      value=""
+                    >
+                      <TrashCanIcon />
+                    </input> */}
+
+                    <button
+                      id="delete-btn"
+                      class="cursor-pointer bg-theme-red text-white p-1 rounded-md font-medium"
+                    >
+                      <div id="identification" aria-valuenow={r.id} hidden />
+                      <TrashCanIcon />
+                    </button>
+                  </td>
+                  <td class="px-4 py-2 rounded-tr-lg rounded-br-lg text-center">
+                    {/* <input
+                      type="button"
+                      class="cursor-pointer bg-theme-yellow text-black p-1 rounded-md font-medium"
+                      value="Modificar"
+                    /> */}
+
+                    <button class="cursor-pointer bg-theme-yellow p-1 rounded-md font-medium">
+                      <EditIcon />
+                    </button>
+                  </td>
+                  {/* <td class="px-4 py-2">{r.keys}</td>
                   <td class="px-4 py-2">{r.province}</td>
                   <td class="px-4 py-2">{r.latitude}</td>
                   <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
                     {r.longitude}
-                  </td>
+                  </td> */}
                 </tr>
               ))
             }
@@ -99,3 +135,61 @@ const res = await fetchRestaurants();
     </main>
   </div>
 </Layout>
+
+<script>
+  const API_URL = import.meta.env.PUBLIC_API_URL;
+  const ID = document.getElementById("identification")?.ariaValueNow;
+
+  document.getElementById("delete-btn")?.addEventListener("click", async () => {
+    if (confirm("¿Estás seguro?")) {
+      try {
+        const response = await fetch(`${API_URL}/restaurant/${ID}`, {
+          method: "DELETE",
+        });
+
+        const info = await response.json();
+        if (response.ok) {
+          // console.log(info);
+          // alert(info);
+
+          let dialog = document.getElementById("myDialog") as HTMLDialogElement;
+          if (!dialog) {
+            dialog = document.createElement("dialog");
+            dialog.id = "myDialog";
+            dialog.className =
+              "max-w-6xl max-h-96 m-auto p-3 rounded-md flex flex-col flex-wrap";
+            document.body.appendChild(dialog);
+            // "<dialog id='myDialog' class='bg-gray-400 max-w-4xl max-h-96'>";
+          }
+          let content =
+            "<p class='text-primary font-bold text-3xl pb-3'>Resumen</p>";
+          Object.entries(info).forEach(([att, value]) => {
+            content += `<p class='pb-1'><strong>${att}</strong>: ${value}</p>`;
+          });
+          content +=
+            "<button id='closeDialog' class='text-theme-red text-xl font-extrabold p-1 rounded-lg cursor-pointer hover:text-theme-red/65'>X</button>";
+          dialog.innerHTML = content;
+
+          dialog.showModal();
+
+          document
+            .getElementById("closeDialog")
+            ?.addEventListener("click", () => {
+              // console.log("HOLA");
+              // let dialog = document.getElementById(
+              //   "myDialog"
+              // ) as HTMLDialogElement;
+              dialog.close();
+              window.location.reload();
+            });
+        } else {
+          console.log(`Error: ${info}`);
+        }
+        //
+      } catch (err) {
+        console.log(`Error: ${err}, ID: ${ID}`);
+        alert("Error al conectar con el servidor, ID: " + ID);
+      }
+    }
+  });
+</script>
