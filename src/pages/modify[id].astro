@@ -1,0 +1,103 @@
+---
+import InputText from "@/components/InputText.astro"
+import Layout from "../layouts/Layout.astro"
+import NavButtons from "@/components/NavButtons.astro"
+
+import { getRestaurantById, updateRestaurantById } from "./api/restaurants";
+
+const { id } = Astro.params;
+
+var restaurant;
+if (id) {
+  restaurant = await getRestaurantById({ id });
+}
+
+// console.log(Astro.url);
+// console.log(Astro.url.searchParams);
+// async function get({url: Object}) {
+//   const params = url.searchParams;
+//   const data = params.get('data');
+
+//   console.log(data);
+//   return {
+//     body: `Data received: ${data}`,
+//   };
+// }
+// const info = await get(Astro.url);
+---
+
+<Layout>
+  <div class="max-w-screen min-h-screen bg-gradient-to-br from-theme-yellow via-theme-yellow to-theme-green-a flex flex-col items-center">
+    <h1 class="pt-2 text-6xl font-black">Modificar un Restaurante</h1>
+
+    <NavButtons textColor="text-black" />
+
+    <main class="px-14 py-7 max-w-4xl max-h-[400px] grid grid-cols-[2fr,2fr,1fr] grid-rows-3 gap-4" transition:name={`mod`}>
+      <form id="restaurantForm" class="min-w-2xl row-span-3 col-span-2 bg-primary-light rounded-2xl shadow-primary shadow-2xl">
+        <section class="flex flex-wrap justify-evenly">
+          <input type="text" value={`${restaurant?.id}`} name="id" hidden />
+          <InputText label="Nombre" name="name" value={`${restaurant?.name}`} />
+          <InputText label="Dirección" name="address" value={`${restaurant?.address}`} />
+          <InputText label="Código Postal" name="postalCode" value={`${restaurant?.postalCode}`} />
+          <InputText label="Sitio web" name="website" value={`${restaurant?.website}`} />
+          <InputText label="Ciudad" name="city" value={`${restaurant?.city}`} />
+          <InputText label="País" name="country" value={`${restaurant?.country}`} />
+          <InputText label="Palabras claves" name="keys" value={`${restaurant?.keys}`} />
+          <InputText label="Provincia" name="province" value={`${restaurant?.province}`} />
+          <InputText label="Latitud" name="latitude" value={`${restaurant?.latitude}`} />
+          <InputText label="Longitud" name="longitude" value={`${restaurant?.longitude}`} />
+        </section>
+      </form>
+      <p class="col-start-3 rounded-[50%] text-9xl size-fit self-end justify-self-center text-center text-theme-violet-a">
+        {restaurant?.id}
+      </p>
+      <div class="col-start-3 justify-items-center">
+        <img src="/images/burger_drawing.webp" alt="Dibujo de Hamburguesa con las manos levantadas" class="w-fit h-full rounded-[50%]">
+      </div>
+      <button id="submitBtn" class="bg-theme-pink-a cursor-pointer rounded-2xl text-2xl transition duration-300 active:bg-theme-pink-a/90 px-2">Guardar</button>
+    </main>
+
+  </div>
+</Layout>
+
+
+<script>
+  import { responseSentSymbol } from "node_modules/astro/dist/core/constants";
+import {updateRestaurantById} from "./api/restaurants";
+import { inferRemoteSize } from "astro:assets";
+
+  document.getElementById("submitBtn")
+  ?.addEventListener("click", async () => {
+    const form = document.getElementById("restaurantForm") as HTMLFormElement;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    Object.entries(data).forEach(([key, value]) => {
+      console.log(`${key}: ${value}`);
+    });
+    console.log("Data ID: " + data["id"]);
+    console.log(typeof Number(data["id"]));
+    // const response = await updateRestaurantById(data, Number(data["id"]));
+    try {
+      const response = await updateRestaurantById(data, data["id"]);
+      if (response?.ok) {
+      console.log("¡Listo!");
+      }
+      else if(response.status == 400) {
+        const message = await response.json();
+        let info = "";
+        Object.entries(message).forEach(([key, value]) => {
+          info += `${key}: ${value}\n`;
+        });
+        alert(info);
+      }
+    } catch(err) {
+      console.log(`Error: ${err}`)
+    }
+
+    // if (response.valueOf()) {
+    // }
+    // else {
+    // }
+  });
+</script>
